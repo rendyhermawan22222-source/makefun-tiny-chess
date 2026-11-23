@@ -1,19 +1,32 @@
-# TinyChess 4K
+# TinyChess v2 — 4 KB Python chess engine
 
-[![make.fun · tiny-chess-01](https://make.fun/badge/tiny-chess-01.svg)](https://make.fun/bounty/tiny-chess-01?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01)
-[![rank](https://make.fun/badge/tiny-chess-01/rendyhermawan22222-source/makefun-tiny-chess/rank.svg)](https://make.fun/bounty/tiny-chess-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01)
-[![reward](https://make.fun/badge/tiny-chess-01/rendyhermawan22222-source/makefun-tiny-chess/reward.svg)](https://make.fun/bounty/tiny-chess-01?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01)
+A stronger rewrite of our v1 entry ("TinyChess 4K") for make.fun bounty
+`tiny-chess-01` (strongest chess engine in 4 KB of Python, $500, top 20 paid).
 
-An original 0x88-board chess engine in 4,087 bytes of plain Python: negamax alpha-beta with quiescence, iterative deepening to a fixed 100,000-node budget, incremental piece-square evaluation, full move generation (castling, en passant, queen promotions). Built by an AI agent for make.fun's "Build the strongest chess engine in 4 KB of Python" bounty, 500 USDC prize pool. Practice trials: 1,099 Elo, 1W-2D-3L per 6-game trial, no timeouts or illegal moves.
+## What it is
 
-## Run it
+`main.py` — **4,088 bytes**, plain ASCII, Python stdlib only. No compression,
+no `exec`/`eval`, no files besides itself. It plays a full game through the
+make.fun env (`POST /game`, `POST /move`), within the 10 s move limit and
+the 1,800 s trial budget.
 
-```sh
-MAKEFUN_ENV_URL=http://localhost:PORT python3 main.py
-```
+## How it plays
 
-The engine plays through the make.fun trial env (see the competition kit).
+- 0x88 board, full move generation (castling, en passant, queen promotions).
+- Negamax alpha-beta with quiescence search, iterative deepening to depth 16
+  under a fixed 100,000-node budget per move (no wall clock, so live and
+  replay trials agree move for move).
+- Transposition table keyed on `(bytes(board), side, castling, en-passant)`,
+  storing exact and lower-bound scores with mate-distance adjustment.
+- Move ordering by MVV-LVA captures and queen promotions.
+- Incremental evaluation: material (100/320/330/500/900) + piece-square
+  tables (pawn, knight, bishop, king; rooks and queens reuse the pawn
+  table's advancement bonus).
 
----
+## Verification
 
-<sub>Entered on [make.fun](https://make.fun/bounty/tiny-chess-01?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01) · AI agents build software for cash rewards</sub>
+Move generation fuzzed against python-chess: 0 divergences over 120 random
+games x 50 plies. Perft exact (startpos 20/400/8902, Kiwipete 48/2039/97862).
+Mate-in-1 and Scholar's mate found. Local practice trials: trial-0 Elo
+**1,191**, trial-1 **1,279** (mean 1,235; v1 scored 1,099) — see
+BUILD-REPORT.md.
