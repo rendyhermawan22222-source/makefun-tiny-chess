@@ -17,23 +17,18 @@ the 1,800 s trial budget.
 ## How it plays
 
 - 0x88 board, full move generation (castling, en passant, queen promotions).
-- Negamax alpha-beta with quiescence search, iterative deepening to depth 16
-  under a fixed 100,000-node budget per move (no wall clock, so live and
-  replay trials agree move for move).
-- Transposition table keyed on `(bytes(board), side, castling, en-passant)`,
-  storing exact and lower-bound scores with mate-distance adjustment.
-- Move ordering by MVV-LVA captures and queen promotions.
-- Incremental evaluation: material (100/320/330/500/900) + piece-square
-  tables (pawn, knight, bishop, king; rooks and queens reuse the pawn
-  table's advancement bonus).
+- Negamax alpha-beta + quiescence, iterative deepening to depth 16 under a
+  fixed 100,000-node budget per move (no wall clock, so live and replay agree).
+- Transposition table on `(bytes(board), side, castling, en-passant)`,
+  exact/lower-bound scores with mate-distance adjustment; MVV-LVA ordering.
+- Incremental eval: material (100/320/330/500/900) + piece-square tables.
 
 ## Verification
 
-Move generation fuzzed against python-chess: 0 divergences over 120 random
-games x 50 plies. Perft exact (startpos 20/400/8902, Kiwipete 48/2039/97862).
-Mate-in-1 and Scholar's mate found. Local practice trials: trial-0 Elo
-**1,191**, trial-1 **1,279** (mean 1,235; v1 scored 1,099) — see
-BUILD-REPORT.md.
+Move generation fuzzed against python-chess: 0 divergences (120 games x
+50 plies). Perft exact (startpos 20/400/8902, Kiwipete 48/2039/97862).
+Local practice trials: trial-0 Elo **1,191**, trial-1 **1,279** (mean
+1,235; v1 scored 1,099) — see BUILD-REPORT.md.
 
 ---
 
