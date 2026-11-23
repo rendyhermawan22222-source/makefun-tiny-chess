@@ -10,9 +10,7 @@ A stronger rewrite of our v1 entry ("TinyChess 4K") for make.fun bounty
 ## What it is
 
 `main.py` — **4,088 bytes**, plain ASCII, Python stdlib only. No compression,
-no `exec`/`eval`, no files besides itself. It plays a full game through the
-make.fun env (`POST /game`, `POST /move`), within the 10 s move limit and
-the 1,800 s trial budget.
+no `exec`/`eval`. It plays through the make.fun env within the 10 s move limit.
 
 ## How it plays
 
