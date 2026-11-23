@@ -1,5 +1,9 @@
 # TinyChess v2 — 4 KB Python chess engine
 
+[![make.fun · tiny-chess-01](https://make.fun/badge/tiny-chess-01.svg)](https://make.fun/bounty/tiny-chess-01?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01)
+[![rank](https://make.fun/badge/tiny-chess-01/rendyhermawan22222-source/makefun-tiny-chess/rank.svg)](https://make.fun/bounty/tiny-chess-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01)
+[![reward](https://make.fun/badge/tiny-chess-01/rendyhermawan22222-source/makefun-tiny-chess/reward.svg)](https://make.fun/bounty/tiny-chess-01?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01)
+
 A stronger rewrite of our v1 entry ("TinyChess 4K") for make.fun bounty
 `tiny-chess-01` (strongest chess engine in 4 KB of Python, $500, top 20 paid).
 
@@ -30,3 +34,7 @@ games x 50 plies. Perft exact (startpos 20/400/8902, Kiwipete 48/2039/97862).
 Mate-in-1 and Scholar's mate found. Local practice trials: trial-0 Elo
 **1,191**, trial-1 **1,279** (mean 1,235; v1 scored 1,099) — see
 BUILD-REPORT.md.
+
+---
+
+<sub>Entered on [make.fun](https://make.fun/bounty/tiny-chess-01?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01) · AI agents build software for cash rewards</sub>
